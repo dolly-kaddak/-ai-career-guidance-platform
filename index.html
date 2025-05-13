@@ -1,0 +1,1277 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Hub</title>
+
+    <!-- Import Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Particles.js for Background Effects -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: black;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: -1;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: cyan;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: cyan;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border: 2px solid cyan;
+            transition: 0.3s;
+        }
+
+        .nav-menu a:hover {
+            background: cyan;
+            color: black;
+        }
+
+        .google-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            overflow: hidden;
+        }
+
+        .google-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: black;
+            box-shadow: 0px 0px 10px cyan;
+            min-width: 200px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: cyan;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid cyan;
+            text-align: left;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding-top: 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px cyan;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-shadow: 0 0 5px cyan;
+        }
+
+        .cta-buttons {
+            margin-top: 20px;
+        }
+
+        .cta-buttons button {
+            background: cyan;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 10px;
+            box-shadow: 0px 0px 10px cyan;
+        }
+
+        .cta-buttons button:hover {
+            background: white;
+            color: black;
+            box-shadow: 0px 0px 15px white;
+        }
+
+/* ===== Global Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ===== AI Section with Split Layout ===== */
+.ai-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 50px 80px;
+    background: #0a0a0a; /* Dark Black Background */
+    overflow: hidden;
+}
+
+/* ===== Left Side: AI Content ===== */
+.content-box {
+    width: 50%;
+    padding: 20px;
+    animation: fadeInLeft 1.5s ease-out;
+}
+
+.content-box h1 {
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    color: #e0e0e0; /* Light gray for heading */
+    text-shadow: 0 0 20px rgba(224, 224, 224, 0.5);
+}
+
+.content-box p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    color: #87a4c4; /* Soft blue for paragraph */
+}
+
+/* AI Features with Icons */
+.ai-features {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.feature-item {
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: scale(1.1);
+}
+
+.feature-item img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 15px rgba(224, 224, 224, 0.5));
+}
+
+.feature-item p {
+    font-size: 1rem;
+    color: #b0b0b0; /* Softer gray for feature text */
+}
+
+/* Call-to-Action Button */
+.cta-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #000;
+    background: #5dc1b9;
+    border-radius: 25px;
+    text-decoration: none;
+    box-shadow: 0 0 15px rgba(93, 193, 185, 0.7);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.cta-btn:hover {
+    background: #0a0a23;
+    color: #5dc1b9;
+    box-shadow: 0 0 30px rgba(93, 193, 185, 0.9);
+}
+
+/* ===== Right Side: Perfectly Set Image Box with Hover on Box ===== */
+.image-box {
+    width: 40%; /* Width for box */
+    height: 400px; /* Square box */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background-color: #0f0f0f;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(93, 193, 185, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Box Hover Effect */
+.image-box:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0 0 50px rgba(93, 193, 185, 0.5); /* Glowing box effect */
+}
+
+/* AI Image - Perfectly Fitted Inside Box */
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image fits perfectly */
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    scale:1.2;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ===== Responsive Design for Mobile View ===== */
+@media (max-width: 768px) {
+    .ai-section {
+        flex-direction: column;
+        height: auto;
+        padding: 30px;
+    }
+
+    .content-box,
+    .image-box {
+        width: 100%;
+        text-align: center;
+    }
+
+    .image-box {
+        height: auto;
+        margin-top: 20px;
+    }
+
+    .ai-features {
+        justify-content: center;
+    }
+}
+
+
+
+
+
+
+
+        
+            /* ===== Features Section ===== */
+            .features-section {
+                background: black;
+                padding: 150px 50px; /* No change in padding */
+                text-align: center;
+                /* box-shadow: 0 0 20px cyan; */
+                min-height: 700px; /* Increased height for spacing */
+            }
+        
+            .features-section h2 {
+                font-size: 2.5rem;
+                margin-bottom: 50px;
+                text-shadow: 0 0 10px cyan;
+            }
+        
+            .features-container {
+                display: flex;
+                justify-content: space-between;
+                gap: 30px;
+                flex-wrap: wrap;
+                min-height: auto; /* Removed fixed height */
+            }
+        
+            .feature-card {
+                background: rgba(0, 0, 0, 0.9);
+                padding: 30px;
+                border-radius: 20px;
+                width: 22%;
+                box-shadow: 0px 0px 20px cyan;
+                transition: 0.3s;
+            }
+        
+            .feature-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0px 0px 30px cyan;
+            }
+        
+            .feature-icon {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 20px;
+            }
+        
+            .feature-card h3 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+                text-shadow: 0 0 5px cyan;
+            }
+        
+            .feature-card p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            /* How It Works Section */
+.how-it-works {
+    background-color: #121212;
+    color: #fff;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.how-it-works h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.sub-text {
+    font-size: 1rem;
+    color: #bbb;
+    margin-bottom: 40px;
+}
+
+/* Steps Container */
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Step Card */
+.step-card {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+}
+
+/* Step Icon */
+.step-icon {
+    font-size: 2.5rem;
+    color: #00ffff;
+    margin-bottom: 15px;
+}
+
+/* Step Title */
+.step-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* Step Description */
+.step-card p {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+/* Testimonial Section - AI-Themed */
+.testimonial-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    overflow: hidden;
+    padding-top: 0px;
+    margin-top: 0px;
+    z-index: 2;
+}
+
+/* Prevents Overlapping with Other Sections */
+.testimonial-section::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/hexellence.png');
+    opacity: 0.1;
+    z-index: -1;
+}
+
+/* Section Title */
+.section-title {
+    font-size: 2.2rem;
+    color: cyan;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px cyan;
+    margin-bottom: 20px;
+}
+
+/* Testimonial Container */
+.testimonial-container {
+    display: flex;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Testimonial Cards - AI Circular Design */
+.testimonial-card {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 2px solid cyan;
+    box-shadow: 0 0 20px cyan;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.9);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 1s ease-in-out;
+    position: relative;
+    margin-bottom: 20px;
+    opacity: 1;
+}
+
+/* Glowing Hover Effect */
+.testimonial-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px cyan;
+}
+
+/* Testimonial Text */
+.testimonial-content {
+    color: white;
+    padding: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-shadow: 0 0 5px cyan;
+}
+
+.testimonial-content h3 {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    color: cyan;
+    text-transform: uppercase;
+}
+.section-title {
+    margin-bottom: 60px;
+}
+
+/* AI-Themed Animated Background */
+.animated-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.1), transparent);
+    animation: pulse 4s infinite;
+    z-index: -1;
+}
+
+/* Pulse Animation for Glowing Effect */
+@keyframes pulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.4; }
+}
+
+/* Transition Effects for Message Change */
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+/* Simple Double Quotes */
+.testimonial-content p::before {
+    content: '"'; /* Simple double quote before */
+}
+
+.testimonial-content p::after {
+    content: '"'; /* Simple double quote after */
+}
+
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b, #3b82f6);
+    color: #fff;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+/* FAQ Container */
+.faq-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+/* FAQ Title */
+.faq-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #3b82f6;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* FAQ Grid */
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+/* FAQ Card */
+.faq-card {
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+    border: 2px solid transparent;
+}
+
+.faq-card:hover {
+    transform: translateY(-5px);
+    border-color: #3b82f6;
+}
+
+/* FAQ Header */
+.faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #3b82f6;
+    transition: all 0.3s ease;
+}
+
+.faq-header:hover {
+    color: #3b82f6;
+}
+
+/* Icon Style */
+.icon {
+    font-size: 1.5rem;
+    color: #3b82f6;
+    transition: transform 0.3s ease;
+}
+
+/* FAQ Body */
+.faq-body {
+    background-color: #f1f5f9;
+    color: #333;
+    margin-top: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    display: none; /* Hide answers by default */
+    font-size: 1rem;
+}
+
+/* Show FAQ Body */
+.faq-body.show {
+    display: block;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .faq-title {
+        font-size: 2rem;
+    }
+
+    .faq-header {
+        font-size: 1rem;
+    }
+
+    .faq-body {
+        font-size: 0.9rem;
+    }
+}
+
+/* AI Career Section Styles */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: black;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Main Section with Parallax Effect */
+.ai-section {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f172a 30%, #1e293b 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Floating Icons Animation */
+.ai-icons {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    animation: float 6s infinite ease-in-out;
+}
+
+/* Individual Icon Styles */
+.icon {
+    width: 50px;
+    height: 50px;
+    opacity: 0.7;
+}
+
+/* 3D Glass Card */
+.ai-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    padding: 50px 40px;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Title with Color Transition */
+.ai-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #f8fafc;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    text-shadow: 0 0 20px #3b82f6, 0 0 40px #4f46e5;
+}
+
+.ai-title span {
+    background: linear-gradient(45deg, #4f46e5, #3b82f6, #9333ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Description Styling */
+.ai-description {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+/* AI Button with Animated Gradient */
+.ai-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: linear-gradient(90deg, #3b82f6, #9333ea);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.8);
+}
+
+/* Button Hover Effect */
+.ai-btn:hover {
+    background: linear-gradient(90deg, #9333ea, #3b82f6);
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.7);
+}
+
+/* Floating Animation for Icons */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Fade-in Animation for Section */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Footer Styling */
+.ai-footer {
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ai-title {
+        font-size: 2.2rem;
+    }
+    .ai-description {
+        font-size: 1rem;
+    }
+    .ai-btn {
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+    .icon {
+        width: 40px;
+        height: 40px;
+    }
+    .ai-card {
+        padding: 40px 20px;
+    }
+}
+
+   
+    </style>
+</head>
+
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Header Section -->
+    <div class="header">
+        <div class="logo">AI Career Hub</div>
+        <div class="nav-menu">
+            
+            <a href="insights.html">Industry Insights</a>
+            <div class="dropdown">
+                <a href="#">Growth Tools</a>
+                <div class="dropdown-content">
+                    
+                    <a href="quize/graph.php">Interview Preparation</a>
+                    <a href="interview_analyzer/php/index.html">Analyze Recording</a>
+                    <a href="cover.html">AI Cover Letter</a>
+                    <a href="resume.html">Resume Builder</a>
+                </div>
+            </div>
+            <div class="google-icon">
+                <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Profile Image" id="profileImage">
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Your AI Career Coach for Professional Success</h1>
+        <p>Advance your career with personalized guidance, interview prep, and AI-powered tools for job success.</p>
+        <div class="cta-buttons">
+            <button onclick="location.href='login1.html'">🚀 Begin Now</button>
+            <button onclick="location.href='career-roadmap/index.php'">🤖 AI Advisor</button>
+        </div>
+    </div>
+
+  <!-- ===== AI Section with Updated Image Box ===== -->
+<section class="ai-section">
+    <div class="content-box">
+        <!-- Left Side: Content with AI Icons -->
+        <h1>Empower Your Career with AI</h1>
+        <p>Unlock personalized career insights and explore endless possibilities with our AI-driven platform.</p>
+
+        <!-- Icon List with Cool Effects -->
+        <div class="ai-features">
+            <div class="feature-item">
+                <img src="https://img.icons8.com/ios-filled/50/00ffff/artificial-intelligence.png" alt="AI Analysis" />
+                <p>AI-Powered Analysis</p>
+            </div>
+            <div class="feature-item">
+                <img src="https://img.icons8.com/ios-filled/50/00ffff/brain.png" alt="Smart Recommendations" />
+                <p>Smart Career Suggestions</p>
+            </div>
+            <div class="feature-item">
+                <img src="https://img.icons8.com/ios-filled/50/00ffff/futurama-bender.png" alt="Future Ready" />
+                <p>Be Future-Ready</p>
+            </div>
+        </div>
+
+        <!-- Call-to-Action Button -->
+        <a href="./chat.html" class="cta-btn">Get Started Now with GuidanceGPT🚀</a>
+    </div>
+
+    <!-- Right Side: Smaller Image with Background Fix -->
+    <div class="image-box">
+        <img src="ai3.jpeg" alt="AI Career Guide" id="ai-image" />
+    </div>
+</section>
+
+
+
+    
+
+
+
+     <!-- Features Section -->
+     <div class="features-section">
+        <h2>Powerful Features for Your Career Growth</h2>
+        <div class="features-container">
+            <!-- Feature 1: Resume Builder -->
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Resume Builder" class="feature-icon">
+                <h3>Resume Builder</h3>
+                <p>Create a professional resume with expert guidance to highlight your skills and achievements.</p>
+            </div>
+            <!-- Feature 2: Mock Interviews -->
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2333/2333135.png" alt="Mock Interviews" class="feature-icon">
+                <h3>Mock Interviews</h3>
+                <p>Practice with AI-driven mock interviews to boost confidence and readiness for real interviews.</p>
+            </div>
+            <!-- Feature 3: Skill Assessment -->
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/3570/3570120.png" alt="Skill Assessment" class="feature-icon">
+                <h3>Skill Assessment</h3>
+                <p>Assess your skills and receive tailored recommendations to improve your career growth.</p>
+            </div>
+            <!-- Feature 4: Career Path Guide -->
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/3474/3474059.png" alt="Career Path Guide" class="feature-icon">
+                <h3>Career Path Guide</h3>
+                <p>Explore the best career paths suited to your strengths and interests with AI guidance.</p>
+            </div>
+        </div>
+    </div>
+
+  <!-- How It Works Section - Simple & Attractive Design -->
+<section class="how-it-works">
+    <h2>How It Works</h2>
+    <p class="sub-text">Simplified steps to enhance your career with AI</p>
+    <div class="steps-container">
+        <!-- Step 1 -->
+        <div class="step-card">
+            <div class="icon-wrapper">
+                <i class="fas fa-user-cog step-icon"></i>
+            </div>
+            <h3>AI Onboarding</h3>
+            <p>Receive personalized AI-driven career insights.</p>
+        </div>
+        <!-- Step 2 -->
+        <div class="step-card">
+            <div class="icon-wrapper">
+                <i class="fas fa-file-alt step-icon"></i>
+            </div>
+            <h3>Document Creation</h3>
+            <p>Generate AI-optimized resumes and cover letters.</p>
+        </div>
+        <!-- Step 3 -->
+        <div class="step-card">
+            <div class="icon-wrapper">
+                <i class="fas fa-comments step-icon"></i>
+            </div>
+            <h3>Mock Interviews</h3>
+            <p>Practice with AI-powered mock interviews.</p>
+        </div>
+        <!-- Step 4 -->
+        <div class="step-card">
+            <div class="icon-wrapper">
+                <i class="fas fa-chart-line step-icon"></i>
+            </div>
+            <h3>Track Progress</h3>
+            <p>Monitor growth with detailed performance analytics.</p>
+        </div>
+    </div>
+</section>
+
+<!-- AI-Themed Testimonial Section with Icons and JS -->
+<section class="testimonial-section">
+    <div class="animated-bg"></div>
+    <h2 class="section-title">What Our Users Say</h2>
+
+    <div class="testimonial-container">
+        <div class="testimonial-card" id="testimonial-1">
+            <div class="testimonial-content">
+                <i class="icon" id="icon-1"></i>
+                <p id="testimonial-text-1">The AI suggestions helped me identify the right career track based on my interests.</p>
+                <h3 id="testimonial-name-1">— NEHA K.</h3>
+            </div>
+        </div>
+        <div class="testimonial-card" id="testimonial-2">
+            <div class="testimonial-content">
+                <i class="icon" id="icon-2"></i>
+                <p id="testimonial-text-2">With real-time analysis, I was able to enhance my resume and secure multiple interviews!</p>
+                <h3 id="testimonial-name-2">— ARJUN V.</h3>
+            </div>
+        </div>
+        <div class="testimonial-card" id="testimonial-3">
+            <div class="testimonial-content">
+                <i class="icon" id="icon-3"></i>
+                <p id="testimonial-text-3">The career guidance platform provided insights I hadn’t even considered before!</p>
+                <h3 id="testimonial-name-3">— SIMRAN P.</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- FAQ Section -->
+<section class="faq-container">
+    <h2 class="faq-title">❓ Frequently Asked Questions</h2>
+
+    <!-- FAQ Grid -->
+    <div class="faq-grid">
+
+        <!-- FAQ 1 -->
+        <div class="faq-card">
+            <div class="faq-header" onclick="toggleAnswer(this)">
+                <h3>🤖 What is Artificial Intelligence?</h3>
+                <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+                Artificial Intelligence (AI) is a branch of computer science that focuses on creating systems capable of performing tasks that usually require human intelligence, such as problem-solving, learning, and decision-making.
+            </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-card">
+            <div class="faq-header" onclick="toggleAnswer(this)">
+                <h3>⚡ How does AI enhance career guidance?</h3>
+                <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+                AI analyzes a user's skills, preferences, and market trends to provide personalized career recommendations, making informed decisions for future opportunities.
+            </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-card">
+            <div class="faq-header" onclick="toggleAnswer(this)">
+                <h3>📚 What are the best platforms to learn AI?</h3>
+                <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+                Popular platforms include Coursera, edX, Udemy, Google AI courses, and free tutorials on YouTube to help you build AI skills.
+            </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-card">
+            <div class="faq-header" onclick="toggleAnswer(this)">
+                <h3>🧠 What skills do I need to work with AI?</h3>
+                <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+                Key skills include programming (Python), statistics, machine learning, problem-solving, data handling, and knowledge of neural networks.
+            </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-card">
+            <div class="faq-header" onclick="toggleAnswer(this)">
+                <h3>🌐 Can AI replace human jobs?</h3>
+                <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+                AI automates repetitive tasks, but it cannot replace human creativity, empathy, and complex decision-making. Instead, AI complements human work by improving efficiency.
+            </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-card">
+            <div class="faq-header" onclick="toggleAnswer(this)">
+                <h3>💡 What are the ethical concerns in AI?</h3>
+                <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+                Ethical concerns include privacy invasion, bias in AI models, transparency in decision-making, and the potential for job displacement.
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+   <!-- AI Career Section -->
+   <section class="ai-section">
+    <div class="ai-container">
+        <!-- Floating AI Icons in Center -->
+        <div class="ai-icons">
+            <img src="https://img.icons8.com/nolan/64/artificial-intelligence.png" class="icon" alt="AI Icon">
+            <img src="https://img.icons8.com/nolan/64/cloud.png" class="icon" alt="Cloud Icon">
+            <img src="https://img.icons8.com/nolan/64/algorithm.png" class="icon" alt="Algorithm Icon">
+        </div>
+
+        <!-- Main AI Content Box -->
+        <div class="ai-box">
+            <h1 class="ai-title">Empower Your Career with <span>AI</span></h1>
+            <p class="ai-description">
+                Gain personalized career recommendations and advance with AI-powered insights that put you ahead in the competitive job market.
+            </p>
+
+            <!-- Call to Action Button -->
+            <a href="#" class="ai-btn">🚀 Start Your Journey Today</a>
+        </div>
+    </div>
+
+   
+</section>
+
+
+
+
+</body>
+</html>
+
+
+    <!-- GSAP Animation Script -->
+    <script>
+        // Particle.js Initialization
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#00ffff" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000" } },
+                opacity: { value: 0.5, random: true, anim: { enable: false } },
+                size: { value: 3, random: true, anim: { enable: false } },
+                line_linked: { enable: true, distance: 150, color: "#00ffff", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 3, direction: "none", random: false, straight: false, out_mode: "out" }
+            }
+        });
+
+        // GSAP Hero Animation
+        gsap.from(".hero h1", { duration: 1, y: -50, opacity: 0, ease: "power2.out" });
+        gsap.from(".hero p", { duration: 1.2, y: -50, opacity: 0, delay: 0.3, ease: "power2.out" });
+        gsap.from(".cta-buttons", { duration: 1.5, y: -30, opacity: 0, delay: 0.5, ease: "power2.out" });
+
+
+        
+          // JavaScript for Testimonial Carousel
+const testimonials = [
+    {
+        text: "The AI suggestions helped me identify the right career track based on my interests.",
+        name: "— NEHA K."
+    },
+    {
+        text: "With real-time analysis, I was able to enhance my resume and secure multiple interviews!",
+        name: "— ARJUN V."
+    },
+    {
+        text: "The career guidance platform provided insights I hadn’t even considered before!",
+        name: "— SIMRAN P."
+    },
+    {
+        text: "I landed my first internship thanks to the personalized career recommendations.",
+        name: "— RAHUL M."
+    },
+    {
+        text: "AI-powered analysis gave me a competitive edge in securing my dream job.",
+        name: "— MEERA J."
+    },
+    {
+        text: "The platform’s insights opened up new possibilities I hadn’t explored before.",
+        name: "— VIKRAM S."
+    }
+];
+
+// Set Interval for Dynamic Message Rotation
+let currentIndex = 0;
+function updateTestimonials() {
+    const cards = document.querySelectorAll(".testimonial-card");
+    
+    cards.forEach((card, index) => {
+        card.classList.add("fade-out");
+
+        setTimeout(() => {
+            const nextIndex = (currentIndex + index) % testimonials.length;
+            card.querySelector("p").textContent = testimonials[nextIndex].text;
+            card.querySelector("h3").textContent = testimonials[nextIndex].name;
+            card.classList.remove("fade-out");
+            card.classList.add("fade-in");
+        }, 1000);
+    });
+
+    currentIndex = (currentIndex + 1) % testimonials.length;
+}
+
+// Rotate Testimonials Every 4 Seconds
+setInterval(updateTestimonials, 3000);
+
+
+        
+window.addEventListener("scroll", function () {
+    const image = document.getElementById("ai-image");
+    const scrollPos = window.scrollY;
+    image.style.transform = `translateY(${scrollPos * 0.05}px) scale(1.03)`;
+});
+
+
+   // Toggle FAQ Answers
+function toggleAnswer(element) {
+    const faqBody = element.nextElementSibling;
+    const icon = element.querySelector('.icon');
+
+    // Collapse all other answers
+    document.querySelectorAll('.faq-body').forEach(body => {
+        if (body !== faqBody) {
+            body.classList.remove('show');
+            body.previousElementSibling.querySelector('.icon').textContent = '+';
+        }
+    });
+
+    // Toggle current FAQ
+    if (faqBody.classList.contains('show')) {
+        faqBody.classList.remove('show');
+        icon.textContent = '+';
+    } else {
+        faqBody.classList.add('show');
+        icon.textContent = '-';
+    }
+} 
+//google icons
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("get_profile_pic.php")
+            .then(res => res.json())
+            .then(data => {
+            console.log(data);
+                if (data.picture) {
+                    document.getElementById("profileImage").src = data.picture;
+                }else{
+                    document.getElementById("profileImage").src = "https://www.w3schools.com/howto/img_avatar.png";
+
+                }
+            });
+    });
+
+ </script>
+
+ 
+</body>
+
+</html>            

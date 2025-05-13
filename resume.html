@@ -1,0 +1,282 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Resume Builder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    :root {
+      --main-bg: rgba(12, 21, 33, 0.9);
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --neon-blue: #00e5ff;
+      --text-light: #f1f1f1;
+      --accent-shadow: 0 0 15px #00e5ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(130deg, #0a0f1a, #121b29);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 2.6rem;
+      color: var(--neon-blue);
+      text-shadow: var(--accent-shadow);
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+
+    #robotContainer {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 1.5rem;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      max-width: 1100px;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+      margin-bottom: 2rem;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .input-group {
+      position: relative;
+      transition: transform 0.3s;
+    }
+
+    .input-group:hover {
+      transform: scale(1.02);
+    }
+
+    .input-group i {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: var(--neon-blue);
+    }
+
+    input, textarea {
+      width: 100%;
+      background: #121d30;
+      border: 1px solid #00e5ff55;
+      color: var(--text-light);
+      padding: 0.9rem 0.9rem 0.9rem 2.5rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      resize: none;
+      transition: 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--neon-blue);
+      box-shadow: var(--accent-shadow);
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    button {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #generateBtn {
+      background: var(--neon-blue);
+      color: #000;
+      box-shadow: 0 0 12px var(--neon-blue);
+    }
+
+    #generateBtn:hover {
+      background: #00b2cc;
+      transform: scale(1.03);
+    }
+
+    #downloadBtn {
+      background: #202f3e;
+      color: #fff;
+      border: 1px solid #00e5ff;
+      display: none;
+      margin-top: 1.2rem;
+      padding: 0.8rem 1.4rem;
+      border-radius: 12px;
+    }
+
+    #downloadBtn:hover {
+      background: #25394f;
+      transform: scale(1.05);
+    }
+
+    #resumeOutput {
+      background: rgba(0, 0, 0, 0.5);
+      border-left: 4px solid var(--neon-blue);
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: 1100px;
+      width: 100%;
+      white-space: pre-wrap;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .typing {
+      font-style: italic;
+      color: var(--neon-blue);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🤖 AI Resume Builder</h1>
+  <div id="robotContainer"></div>
+
+  <form id="resumeForm">
+    <div class="input-group"><i class="fas fa-user"></i><input type="text" id="name" placeholder="Full Name" required></div>
+    <div class="input-group"><i class="fas fa-briefcase"></i><input type="text" id="job" placeholder="Job Title" required></div>
+    <div class="input-group"><i class="fas fa-map-marker-alt"></i><input type="text" id="location" placeholder="Location" required></div>
+    <div class="input-group"><i class="fas fa-envelope"></i><input type="text" id="contact" placeholder="Contact Information" required></div>
+    <div class="input-group full-width"><i class="fas fa-user-tie"></i><textarea id="summary" placeholder="Professional Summary" required></textarea></div>
+    <div class="input-group full-width"><i class="fas fa-lightbulb"></i><textarea id="skills" placeholder="Key Skills (comma separated)" required></textarea></div>
+    <div class="input-group full-width"><i class="fas fa-briefcase"></i><textarea id="experience" placeholder="Work Experience" required></textarea></div>
+    <div class="input-group full-width"><i class="fas fa-graduation-cap"></i><textarea id="education" placeholder="Education Background" required></textarea></div>
+    <div class="input-group full-width"><i class="fas fa-certificate"></i><textarea id="certifications" placeholder="Certifications (optional)"></textarea></div>
+    <button type="submit" id="generateBtn" class="full-width">Generate AI Resume</button>
+  </form>
+
+  <div id="resumeOutput" class="typing"></div>
+  <button id="downloadBtn">📥 Download Resume PDF</button>
+
+  <script>
+    lottie.loadAnimation({
+      container: document.getElementById('robotContainer'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'https://assets5.lottiefiles.com/packages/lf20_pprxh53t.json'
+    });
+
+    const form = document.getElementById("resumeForm");
+    const output = document.getElementById("resumeOutput");
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    const apiUrl = "https://openrouter.ai/api/v1/chat/completions";
+    const apiKey = "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";
+
+    function animateTypingDots(el) {
+      let dotCount = 0;
+      const interval = setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        el.textContent = "Generating resume" + ".".repeat(dotCount);
+      }, 500);
+      return interval;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fields = ["name", "job", "location", "contact", "summary", "skills", "experience", "education", "certifications"];
+      const data = Object.fromEntries(fields.map(id => [id, document.getElementById(id).value]));
+
+      const prompt = `You are an expert resume writer. Generate a clean, professional, and ATS-optimized resume based on the following candidate information...
+
+      Full Name: ${data.name}
+      Desired Job Title: ${data.job}
+      Location: ${data.location}
+      Contact Information: ${data.contact}
+      Professional Summary: ${data.summary}
+      Key Skills: ${data.skills}
+      Work Experience: ${data.experience}
+      Education Background: ${data.education}
+      Certifications: ${data.certifications}
+
+      Output in structured resume format.`;
+
+      output.classList.add("typing");
+      let typingAnim = animateTypingDots(output);
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${apiKey}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model: "openai/gpt-3.5-turbo",
+            messages: [{ role: "user", content: prompt }]
+          })
+        });
+
+        clearInterval(typingAnim);
+        const result = await response.json();
+        const resumeText = result.choices?.[0]?.message?.content?.trim();
+
+        if (resumeText) {
+          output.classList.remove("typing");
+          output.innerText = resumeText;
+          downloadBtn.style.display = "inline-block";
+        } else {
+          output.innerText = "Could not generate resume. Try again.";
+        }
+      } catch (err) {
+        clearInterval(typingAnim);
+        output.innerText = "Error connecting to API.";
+        console.error(err);
+      }
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      html2pdf().set({
+        margin: 0.5,
+        filename: 'AI_Generated_Resume.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      }).from(output).save();
+    });
+  </script>
+</body>
+</html>

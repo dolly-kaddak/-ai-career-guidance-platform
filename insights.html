@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industry Insights</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #121232, #1b1b3c);
+    padding: 15px 50px;
+    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
+}
+
+.navbar .logo {
+    font-size: 28px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #00e5ff, #9c27b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glowText 2s infinite alternate;
+    transition: transform 0.3s ease;
+}
+
+.navbar .logo:hover {
+    transform: scale(1.08);
+}
+.nav-links a {
+    color: #bfbfff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    background: rgba(0, 229, 255, 0.1);
+    color: #00e5ff;
+    transform: scale(1.05);
+}
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: #334155;
+            transform: scale(1.05);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 40px;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            min-width: 220px;
+            flex-direction: column;
+            z-index: 99;
+        } 
+         .active{
+           display:flex;
+        }
+
+        .dropdown-content a {
+            padding: 12px 20px;
+            white-space: nowrap;
+            background: linear-gradient(to right, #1e3a8a, #2563eb);
+            color: white;
+            margin: 5px;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: rgba(30, 41, 59, 0.6);
+            padding: 20px;
+            border-radius: 20px;
+            flex: 1 1 200px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-box h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: #334155;
+            border-radius: 10px;
+            margin-top: 10px;
+            height: 20px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+
+        .chart-container {
+            margin-top: 30px;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .live-badge {
+            background: #16a34a;
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin-left: 10px;
+            vertical-align: middle;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .update-icon {
+            margin-left: 5px;
+            color: #60a5fa;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar">
+        <div class="logo">AI Career Hub</div>
+        <div class="nav-links">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <div class="dropdown">
+            <a href="#" onclick="display_dropdown();"><i class="fas fa-toolbox"></i> Growth Tools</a>
+                <div class="dropdown-content" id="dropdown-content">
+                    
+                    <a href="quize/graph.php"><i class="fas fa-comments"></i> Interview Preparation</a>
+                    <a href="interview_analyzer/php/index.html"><i class="fas fa-microphone"></i> Analyze Recording</a>
+                    <a href="cover.html"><i class="fas fa-file-alt"></i> AI Cover Letter</a>
+                    <a href="resume.html"><i class="fas fa-file-signature"></i> Resume Builder</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Industry Insights <span class="live-badge">Live</span></h1>
+            <p>Last updated: <span id="lastUpdated">Loading...</span><i class="fas fa-sync update-icon"></i></p>
+        </header>
+        <div class="stats">
+            <div class="stat-box">
+                <h3><i class="fas fa-chart-line"></i> Market Outlook</h3>
+                <p id="marketOutlook">Loading...</p>
+            </div>
+            <div class="stat-box">
+                <h3><i class="fas fa-chart-bar"></i> Industry Growth</h3>
+                <p id="growthPercent">Loading...</p>
+                <div class="progress-container">
+                    <div id="growthBar" class="progress-bar"></div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <h3><i class="fas fa-fire"></i> Demand Level</h3>
+                <p id="demandLevel">Loading...</p>
+            </div>
+            <div class="stat-box">
+                <h3><i class="fas fa-lightbulb"></i> Top Skills</h3>
+                <p id="topSkills">Loading...</p>
+            </div>
+        </div>
+        <div class="chart-container">
+            <h3>💼 Salary Trends Across Roles</h3>
+            <canvas id="salaryChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("get_specialization_data.php")
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error("Error:", data.error);
+                    return;
+                }
+                 //Set Last Updated Time
+                // Update last updated time
+                document.getElementById("lastUpdated").innerText = new Date().toLocaleString();
+                  //Extract User Category Info
+                const userCategory = data.user_category || {};
+
+                const marketOutlook = userCategory.market_outlook ?? "N/A";
+                const growthPercent = parseFloat(userCategory.industry_growth ?? 0);
+                const demandLevel = userCategory.demand_level ?? "N/A";
+                const topSkills = userCategory.top_skills ?? "N/A";
+                 //Uses optional chaining and nullish coalescing (??) to handle missing values. 
+
+                document.getElementById("marketOutlook").innerText = marketOutlook;
+                document.getElementById("growthPercent").innerText = `${growthPercent}%`;
+                document.getElementById("demandLevel").innerText = demandLevel;
+                document.getElementById("topSkills").innerText = topSkills;
+
+                const growthBar = document.getElementById("growthBar");
+                growthBar.style.width = `${growthPercent}%`;
+                growthBar.title = `${growthPercent}% Industry Growth`;
+
+                const graphData = data.graph_data || [];
+                   // Extract Graph Data
+                const labels = graphData.map(item => item.specialization);
+                const minSalaries = graphData.map(item => parseInt(item.min_salary) || 0);
+                const medianSalaries = graphData.map(item => parseInt(item.median_salary) || 0);
+                const maxSalaries = graphData.map(item => parseInt(item.max_salary) || 0);
+
+                if (salaryChart && labels.length) {
+                    salaryChart.data.labels = labels;
+                    salaryChart.data.datasets[0].data = minSalaries;
+                    salaryChart.data.datasets[1].data = medianSalaries;
+                    salaryChart.data.datasets[2].data = maxSalaries;
+                    salaryChart.update();
+                }
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    });
+
+    const ctx = document.getElementById('salaryChart').getContext('2d');
+    const salaryChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [], // will be filled dynamically
+            datasets: [
+                {
+                    label: 'Min Salary',
+                    data: [],
+                    backgroundColor: '#64748b'
+                },
+                {
+                    label: 'Median Salary',
+                    data: [],
+                    backgroundColor: '#3b82f6'
+                },
+                {
+                    label: 'Max Salary',
+                    data: [],
+                    backgroundColor: '#10b981'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function (value) {
+                            return  + value.toLocaleString();
+                        }
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return `${context.dataset.label}: ${context.parsed.y.toLocaleString()}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    function display_dropdown(){
+       document.getElementById("dropdown-content").classList.toggle("active");
+    }
+</script>
+
+</body>
+
+</html>

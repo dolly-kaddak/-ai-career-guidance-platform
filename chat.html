@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Career Guidance Platform</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(-45deg, #050510, #0a0f1e, #080d18, #060c16);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      color: #ffffff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    #tsparticles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .chat-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      width: 95%;
+      max-width: 1300px;
+      height: 90vh;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(0, 255, 170, 0.5);
+      backdrop-filter: blur(12px);
+      border: 2px solid rgba(0, 255, 170, 0.2);
+    }
+    .robot-section {
+      width: 35%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-right: 2px solid #2b2b2b;
+      position: relative;
+      backdrop-filter: blur(10px);
+    }
+    .robot-section h2 {
+      color: #00fff2;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 0 0 8px #00fff2;
+    }
+    .chat-section {
+      width: 65%;
+      display: flex;
+      flex-direction: column;
+      background: transparent;
+      backdrop-filter: blur(5px);
+    }
+    .chat-header {
+      font-size: 28px;
+      font-weight: 600;
+      text-align: center;
+      padding: 15px;
+      color: #00ffe0;
+      text-shadow: 0 0 10px #00ffe0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    #chatBox {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .chat-bubble {
+      max-width: 75%;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      border-radius: 20px;
+      font-size: 16px;
+      line-height: 1.5;
+      position: relative;
+      word-wrap: break-word;
+      box-shadow: 0 0 10px rgba(0,255,255,0.2);
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease;
+    }
+    .chat-bubble:hover {
+      transform: scale(1.02);
+    }
+    .user {
+      background: rgba(0, 255, 255, 0.1);
+      color: #00ffff;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+      border: 1px solid #00ffff44;
+    }
+    .bot {
+      background: rgba(255, 0, 255, 0.1);
+      color: #ff66ff;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+      border: 1px solid #ff00ff33;
+    }
+    .chat-input {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background: rgba(0,0,0,0.7);
+      border-top: 1px solid #2e2e2e;
+      backdrop-filter: blur(8px);
+    }
+    .chat-input input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      margin-right: 10px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #00ffcc;
+      outline: none;
+    }
+    .chat-input input[type="file"] {
+      display: none;
+    }
+    .chat-input label {
+      cursor: pointer;
+      font-size: 22px;
+      margin-right: 10px;
+      color: #00ffff;
+    }
+    .chat-input button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      color: #fff;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0,255,255,0.4);
+    }
+    .send-btn {
+      background: linear-gradient(145deg, #00f0ff, #8f00ff);
+    }
+    .mic-btn {
+      background: linear-gradient(145deg, #00ff7f, #00bfff);
+      margin-right: 8px;
+    }
+    .chat-input button:hover {
+      transform: scale(1.1);
+      filter: brightness(1.2);
+    }
+    .chat-bubble img {
+      border: 1px solid #00ffff33;
+      transition: transform 0.3s;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .chat-bubble img:hover {
+      transform: scale(1.05);
+    }
+    .chat-bubble span {
+      font-size: 20px;
+      vertical-align: top;
+      margin-right: 10px;
+    }
+    #robot-animation {
+      width: 100%;
+      height: 300px;
+    }
+    #modelSelect {
+      background: #111;
+      color: #00fff2;
+      border-radius: 10px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="tsparticles"></div>
+  <div class="chat-container">
+    <div class="robot-section">
+      <h2>Ready to Guide Your Future 🚀</h2>
+      <div id="robot-animation"></div>
+    </div>
+    <div class="chat-section">
+      <div class="chat-header">🤖 GuidanceGPT</div>
+      <div id="chatBox"></div>
+      <div id="typing" class="chat-bubble bot" style="display: none;">🤖 <em>Typing...</em></div>
+      <div class="chat-input">
+        <select id="modelSelect">
+          <option value="openai/gpt-3.5-turbo">GPT 3.5 Turbo</option>
+          <option value="openai/gpt-4">GPT 4</option>
+        </select>
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <input type="file" id="imageUpload">
+        <label for="imageUpload">📎</label>
+        <button class="mic-btn" onclick="startVoice()">🎤</button>
+        <button class="send-btn" onclick="sendMessage()">Send</button>
+        <button class="send-btn" onclick="clearChat()">🗑️</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const apiUrl = "https://openrouter.ai/api/v1/chat/completions";
+    const apiKey = "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";
+    const chatBox = document.getElementById("chatBox");
+
+    function addMessage(content, sender = 'user', isImage = false) {
+      const div = document.createElement("div");
+      div.className = `chat-bubble ${sender}`;
+      const icon = sender === 'bot' ? '🤖' : '🧑';
+      div.innerHTML = isImage ? `<span>${icon}</span><img src="${content}">` : `<span>${icon}</span>${content}`;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      const imageInput = document.getElementById("imageUpload");
+      if (!message && !imageInput.files.length) return;
+      if (message) addMessage(message, 'user');
+      if (imageInput.files.length > 0) {
+        const file = imageInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          addMessage(e.target.result, 'user', true);
+        };
+        reader.readAsDataURL(file);
+      }
+      document.getElementById("typing").style.display = "block";
+      const model = document.getElementById("modelSelect").value;
+      const payload = {
+        model: model,
+        messages: [{ role: "user", content: message }]
+      };
+      try {
+        const res = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        const reply = data.choices[0].message.content;
+        document.getElementById("typing").style.display = "none";
+        addMessage(reply, 'bot');
+        speak(reply);
+      } catch (err) {
+        document.getElementById("typing").style.display = "none";
+        addMessage("Error: " + err.message, 'bot');
+      }
+      input.value = "";
+      imageInput.value = "";
+    }
+
+    function startVoice() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.interimResults = true;
+      const input = document.getElementById("userInput");
+      input.value = "";
+      recognition.start();
+      recognition.onresult = function (event) {
+        const transcript = event.results[0][0].transcript;
+        input.value = transcript;
+        if (event.results[0].isFinal) {
+          sendMessage();
+        }
+      };
+    }
+
+    function speak(text) {
+      const synth = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance(text);
+      synth.speak(utterance);
+    }
+
+    function clearChat() {
+      chatBox.innerHTML = '';
+    }
+
+    lottie.loadAnimation({
+      container: document.getElementById('robot-animation'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'https://assets4.lottiefiles.com/packages/lf20_1pxqjqps.json'
+    });
+
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: true },
+      particles: {
+        number: { value: 30 },
+        color: { value: "#00fff2" },
+        size: { value: 3 },
+        move: { enable: true, speed: 1 },
+        links: { enable: true, color: "#00fff2" }
+      }
+    });
+  </script>
+</body>
+</html>
